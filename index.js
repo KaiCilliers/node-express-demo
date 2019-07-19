@@ -85,25 +85,23 @@ app.post('/api/courses', (req, res) => {
  * 
  * Update an existing item
  */
-app.put('api/courses/:id', (req, res) => {
-    // Look up the course
-    // If it doesn't exist, return 404
+app.put('/api/courses/:id', (req, res) => {
     const course = myCourses.find(item => item.id === parseInt(req.params.id));
-    if(!course) return res.status(404).send('The course with the given ID was not found :(');
+    if(!course) return res.status(400).send(result.error.details[0].message);
 
-    // Else validate input
-    // If invalid, return 400
-    const schema = {
-        name: Joi.string().min(3).required()
-    };
-    const result = Joi.validate(course, schema);
-    if(error) return res.status(400).send(result.error.details[0].message);
+    const { error } = validateCourse(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
 
-    // Update course
-    // Return updated course to client
     course.name = req.body.name;
     res.send(course);
 });
+
+function validateCourse(course) {
+    const schema = {
+        name: Joi.string().min(3).required()
+    };
+    return Joi.validate(course, schema);
+}
 
 /**
  * Start listening
