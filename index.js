@@ -53,6 +53,12 @@ app.get('/api/posts/:year/:month', (req, res) => {
  * Ensure the path is correct format
  */
 app.post('/api/courses', (req, res) => {
+    // Validation
+    if(!req.body.name || req.body.name.length < 3) {
+        // Return a 400 response (Bad Request)
+        res.status(400).send('Name is required and should be minimum 3 characters');
+        return;
+    }
     // New course object
     const course = {
         id: myCourses.length + 1,
