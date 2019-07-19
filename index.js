@@ -54,20 +54,9 @@ app.get('/api/posts/:year/:month', (req, res) => {
  * Ensure the path is correct format
  */
 app.post('/api/courses', (req, res) => {
-    // Joi requires a schema
-    const schema = {
-        name: Joi.string().min(3).required()
-    };
+    const { error } = validateCourse(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
 
-    // Joi validation
-    const result = Joi.validate(req.body, schema);
-
-    // Process result
-    if(result.error) {
-        // Return a 400 response (Bad Request)
-        res.status(400).send(result.error.details[0].message);
-        return;
-    }
     // New course object
     const course = {
         id: myCourses.length + 1,
