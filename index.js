@@ -76,7 +76,7 @@ app.post('/api/courses', (req, res) => {
  */
 app.put('/api/courses/:id', (req, res) => {
     const course = myCourses.find(item => item.id === parseInt(req.params.id));
-    if(!course) return res.status(400).send(result.error.details[0].message);
+    if(!course) return res.status(404).send('The course with the given ID was not found :(');
 
     const { error } = validateCourse(req.body);
     if(error) return res.status(400).send(error.details[0].message);
