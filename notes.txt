@@ -1,0 +1,11 @@
+Just some notes that was mentioned in the lecture
+
+    - Never trust that data that the client sends you.
+    Always validate the input
+    - PUT logic
+        - Look up the item
+        - If it does no exist, return 404
+        - If exists, validate input
+        - If invalid input, return 400
+        - If valid input, update item and return updated item to client
+    

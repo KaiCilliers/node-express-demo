@@ -81,6 +81,31 @@ app.post('/api/courses', (req, res) => {
 });
 
 /**
+ * PUT
+ * 
+ * Update an existing item
+ */
+app.put('api/courses/:id', (req, res) => {
+    // Look up the course
+    // If it doesn't exist, return 404
+    const course = myCourses.find(item => item.id === parseInt(req.params.id));
+    if(!course) return res.status(404).send('The course with the given ID was not found :(');
+
+    // Else validate input
+    // If invalid, return 400
+    const schema = {
+        name: Joi.string().min(3).required()
+    };
+    const result = Joi.validate(course, schema);
+    if(error) return res.status(400).send(result.error.details[0].message);
+
+    // Update course
+    // Return updated course to client
+    course.name = req.body.name;
+    res.send(course);
+});
+
+/**
  * Start listening
  */
 let PORT = process.env.PORT || 3000;
