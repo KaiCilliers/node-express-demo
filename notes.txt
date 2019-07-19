@@ -8,4 +8,8 @@ Just some notes that was mentioned in the lecture
         - If exists, validate input
         - If invalid input, return 400
         - If valid input, update item and return updated item to client
+    - DELETE logic
+        - Look up the item
+        - If it does not exist, return 404
+        - If exist, delete item and return item to client
     
