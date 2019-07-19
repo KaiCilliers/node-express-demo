@@ -1,6 +1,7 @@
 /**
  * Dependancies
  */
+const Joi = require('@hapi/joi');
 const express = require('express');
 const app = express();
 
@@ -53,6 +54,15 @@ app.get('/api/posts/:year/:month', (req, res) => {
  * Ensure the path is correct format
  */
 app.post('/api/courses', (req, res) => {
+    // Joi requires a schema
+    const schema = {
+        name: Joi.string().min(3).required()
+    };
+
+    // Joi validation
+    const result = Joi.validate(req.body, schema);
+    console.log(result);
+
     // Validation
     if(!req.body.name || req.body.name.length < 3) {
         // Return a 400 response (Bad Request)
