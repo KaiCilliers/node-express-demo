@@ -74,7 +74,9 @@ app.post('/api/courses', (req, res) => {
         // We assume there is an object called body with the name property
         name: req.body.name
     };
+    // Add the new course obj to list
     myCourses.push(course);
+    // Send the new object back to user
     res.send(course);
 });
 
