@@ -1,7 +1,9 @@
 /**
- * Dependancies
+ * Dependencies
  */
 const Joi = require('@hapi/joi');
+const logger = require('./logger');
+const authenticator = require('./auth');
 const express = require('express');
 const app = express();
 
@@ -12,8 +14,15 @@ const app = express();
  * sequentially.
  * 
  * Request Processing Pipeline
+ * app.use() installs a new midldeware
  */
 app.use(express.json());
+/**
+ * [next] has a reference to the
+ * next middleware function.
+ */
+app.use(logger);
+app.use(authenticator);
 
 /**
  * Array
