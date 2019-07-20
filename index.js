@@ -17,6 +17,8 @@ const app = express();
  * app.use() installs a new midldeware
  */
 app.use(express.json());
+// convert key=value pairs to json
+app.use(express.urlencoded());
 /**
  * [next] has a reference to the
  * next middleware function.
