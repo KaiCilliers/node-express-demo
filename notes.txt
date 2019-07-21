@@ -26,7 +26,9 @@ Just some notes that was mentioned in the lecture
     - you can even set up multiple namespaces
         - $env:DEBUG="app.db,app:startup"
         - $env:BEDUG="app.*"
-
 - Templating Engines
     - Used for HTML markup responses
     - Not really relevant
+- Application Structuring
+    - All endpoints that relate to x has to be in a file called x.js
+        - courses.js for example
