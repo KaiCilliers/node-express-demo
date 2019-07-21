@@ -5,6 +5,8 @@ const Joi = require('@hapi/joi');
 const logger = require('./logger');
 const authenticator = require('./auth');
 const express = require('express');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const app = express();
 
 /**
@@ -33,6 +35,10 @@ app.use(express.static('public'));
  */
 app.use(logger);
 app.use(authenticator);
+// Just does some maintenance work with Headers (good practice)
+app.use(helmet());
+// HTTP logger
+app.use(morgan('dev'));
 
 /**
  * Array
