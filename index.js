@@ -18,7 +18,15 @@ const app = express();
  */
 app.use(express.json());
 // convert key=value pairs to json
-app.use(express.urlencoded());
+// the boolean value allows conversion of complex objects
+app.use(express.urlencoded({ extended: true }));
+/**
+ * Argument is a folder ([public])
+ * all static assets like css and images.
+ * 
+ * Access vai localhost/3000/readme.txt
+ */
+app.use(express.static('public'));
 /**
  * [next] has a reference to the
  * next middleware function.
