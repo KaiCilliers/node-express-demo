@@ -11,33 +11,13 @@ const app = express();
 
 /**
  * Middleware
- * 
- * A request goes through these
- * sequentially.
- * 
- * Request Processing Pipeline
- * app.use() installs a new midldeware
  */
 app.use(express.json());
-// convert key=value pairs to json
-// the boolean value allows conversion of complex objects
 app.use(express.urlencoded({ extended: true }));
-/**
- * Argument is a folder ([public])
- * all static assets like css and images.
- * 
- * Access vai localhost/3000/readme.txt
- */
 app.use(express.static('public'));
-/**
- * [next] has a reference to the
- * next middleware function.
- */
 app.use(logger);
 app.use(authenticator);
-// Just does some maintenance work with Headers (good practice)
 app.use(helmet());
-// HTTP logger
 app.use(morgan('dev'));
 
 /**
@@ -51,53 +31,39 @@ const myCourses = [
 
 
 /**
- * GET - fetch data
+ * GET
  */
 app.get('/', (req, res) => {
     res.send('Hello!');
 });
-
 app.get('/api/courses', (req, res) => {
     res.send(myCourses);
 });
-
 app.get('/api/courses/:id', (req, res) => {
     const course = myCourses.find(c => c.id === parseInt(req.params.id));
     if(!course) return res.status(404).send('The course with the given ID was not found :(');
     res.send(course);
 });
-
 app.get('/api/posts/:year/:month', (req, res) => {
     res.send(req.params);
-    //res.send(req.query);
 });
 
 /**
  * POST
- * 
- * Create new entry
- * Ensure the path is correct format
  */
 app.post('/api/courses', (req, res) => {
     const { error } = validateCourse(req.body);
     if(error) return res.status(400).send(error.details[0].message);
-
-    // New course object
     const course = {
         id: myCourses.length + 1,
-        // We assume there is an object called body with the name property
         name: req.body.name
     };
-    // Add the new course obj to list
     myCourses.push(course);
-    // Send the new object back to user
     res.send(course);
 });
 
 /**
  * PUT
- * 
- * Update an existing item
  */
 app.put('/api/courses/:id', (req, res) => {
     const course = myCourses.find(item => item.id === parseInt(req.params.id));
@@ -118,7 +84,6 @@ app.delete('/api/courses/:id', (req, res) => {
     if(!course) return res.status(404).send('The course with the given ID was not found :(');
 
     const index = myCourses.indexOf(course);
-    // Go to the index and delete 1 object
     myCourses.splice(index, 1);
 
     res.send(course);
