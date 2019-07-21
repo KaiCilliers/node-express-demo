@@ -8,6 +8,9 @@ const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const config = require('config');
+// second parentheses is an argument for a custom namespace
+const startupDebugger = require('debug')('app:startup');
+const dbDebugger = require('debug')('app:db');
 
 const app = express();
 
@@ -22,15 +25,18 @@ app.use(authenticator);
 app.use(helmet());
 if(app.get('env') === 'development') {
     app.use(morgan('dev'));
-    console.log("Morgan enabled...");
+    startupDebugger("Morgan enabled...");
 }
+
+// Some DB work
+dbDebugger('Connected to the database');
 
 /**
  * Configuration
  */
-console.log(`Application Name: ${config.get('name')}`);
-console.log(`Application Name: ${config.get('mail.host')}`);
-console.log(`Application Name: ${config.get('mail.password')}`);
+startupDebugger(`Application Name: ${config.get('name')}`);
+startupDebugger(`Application Name: ${config.get('mail.host')}`);
+startupDebugger(`Application Name: ${config.get('mail.password')}`);
 
 /**
  * Array

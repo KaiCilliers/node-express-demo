@@ -19,3 +19,10 @@ Just some notes that was mentioned in the lecture
     - save the reference in a file called 'custom-environment-variables.json'
     - map the environment values to varaibles
     - $env:my_password=1234
+- Logging related
+    - set an environmental variable to determine which logs to output
+    - $env:DEBUG="app:startup"
+    - namespace is custom :)
+    - you can even set up multiple namespaces
+        - $env:DEBUG="app.db,app:startup"
+        - $env:BEDUG="app.*"
