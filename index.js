@@ -9,6 +9,14 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const app = express();
 
+// The environment the node application is running in,
+// Production, development, testing, staging, etc
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+// app.get() allows you to get various settings of the application
+//[env] internally uses process.env.NODE_ENV to get environment
+// It return development by default
+console.log(`app env: ${app.get('env')}`);
+
 /**
  * Middleware
  */
