@@ -2,8 +2,8 @@
  * Dependencies
  */
 const Joi = require('@hapi/joi');
-const logger = require('./logger');
-const authenticator = require('./auth');
+const logger = require('./middleware/logger');
+const authenticator = require('./middleware/auth');
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
