@@ -12,4 +12,7 @@ Just some notes that was mentioned in the lecture
         - Look up the item
         - If it does not exist, return 404
         - If exist, delete item and return item to client
+- Setting environment varaibles in powershell
+    - $env.PORT=5000
+    - env.NODE_ENV="production"
     
