@@ -7,6 +7,8 @@ const authenticator = require('./auth');
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const config = require('config');
+
 const app = express();
 
 /**
@@ -20,9 +22,15 @@ app.use(authenticator);
 app.use(helmet());
 if(app.get('env') === 'development') {
     app.use(morgan('dev'));
-    // Debugging purposes
     console.log("Morgan enabled...");
 }
+
+/**
+ * Configuration
+ */
+console.log(`Application Name: ${config.get('name')}`);
+console.log(`Application Name: ${config.get('mail.host')}`);
+console.log(`Application Name: ${config.get('mail.password')}`);
 
 /**
  * Array

@@ -15,4 +15,7 @@ Just some notes that was mentioned in the lecture
 - Setting environment varaibles in powershell
     - $env.PORT=5000
     - env.NODE_ENV="production"
-    
+- You should save passwords in environment varaibles
+    - save the reference in a file called 'custom-environment-variables.json'
+    - map the environment values to varaibles
+    - $env:my_password=1234
