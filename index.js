@@ -8,8 +8,7 @@ const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const config = require('config');
-// second parentheses is an argument for a custom namespace
-// You are not going to use multiple debuggers in the same file most likely
+const courses = require('./courses');
 const debug = require('debug')('app:startup');
 
 const app = express();
@@ -27,6 +26,8 @@ if(app.get('env') === 'development') {
     app.use(morgan('dev'));
     debug("Morgan enabled...");
 }
+// Syntax: (path, router object that we imported)
+app.use('/api/courses', courses);
 
 /**
  * Configuration
@@ -34,15 +35,6 @@ if(app.get('env') === 'development') {
 debug(`Application Name: ${config.get('name')}`);
 debug(`Application Name: ${config.get('mail.host')}`);
 debug(`Application Name: ${config.get('mail.password')}`);
-
-/**
- * Array
- */
-const myCourses = [
-    { id: 1, name: "course1" },
-    { id: 2, name: "course2" },
-    { id: 3, name: "course3" }
-];
 
 /**
  * GET

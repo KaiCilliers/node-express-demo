@@ -2,29 +2,33 @@
  * Dependencies
  */
 const express = require('express');
-// This approach does not work if you split the routes
-// into seperate files
-const app = express();
+const router = express.Router(); // returns a router object
+
+/**
+ * Array
+ */
+const myCourses = [
+    { id: 1, name: "course1" },
+    { id: 2, name: "course2" },
+    { id: 3, name: "course3" }
+];
 
 /**
  * GET
  */
-app.get('/api/courses', (req, res) => {
+router.get('/', (req, res) => {
     res.send(myCourses);
 });
-app.get('/api/courses/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     const course = myCourses.find(c => c.id === parseInt(req.params.id));
     if(!course) return res.status(404).send('The course with the given ID was not found :(');
     res.send(course);
-});
-app.get('/api/posts/:year/:month', (req, res) => {
-    res.send(req.params);
 });
 
 /**
  * POST
  */
-app.post('/api/courses', (req, res) => {
+router.post('/', (req, res) => {
     const { error } = validateCourse(req.body);
     if(error) return res.status(400).send(error.details[0].message);
     const course = {
@@ -38,7 +42,7 @@ app.post('/api/courses', (req, res) => {
 /**
  * PUT
  */
-app.put('/api/courses/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     const course = myCourses.find(item => item.id === parseInt(req.params.id));
     if(!course) return res.status(404).send('The course with the given ID was not found :(');
 
@@ -52,7 +56,7 @@ app.put('/api/courses/:id', (req, res) => {
 /**
  * DELETE
  */
-app.delete('/api/courses/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     const course = myCourses.find(item => item.id === parseInt(req.params.id));
     if(!course) return res.status(404).send('The course with the given ID was not found :(');
 
@@ -72,3 +76,10 @@ function validateCourse(course) {
     };
     return Joi.validate(course, schema);
 }
+
+/**
+ * Export the router
+ * Allows access to the endpoints
+ * in this file
+ */
+module.exports = router;
